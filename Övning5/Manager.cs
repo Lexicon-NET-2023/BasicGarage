@@ -7,7 +7,7 @@ using Övning5;
 
 internal class Manager
 {
-    public IUI ui { get; }
+    private IUI ui;
 
     public Manager(IUI ui)
     {
@@ -20,10 +20,10 @@ internal class Manager
 
         IHandler handler = StartManager();
 
-        MainMenu(ui, handler);
+        MainMenu(handler);
     }
 
-    public void MainMenu(IUI ui, IHandler currGarage)
+    public void MainMenu(IHandler currGarage)
     {
 
         while (true)
@@ -147,8 +147,8 @@ internal class Manager
 
         foreach (var type in types)
         {
-            List<IVehicle> lista = currGarage.NrOfType(type);
-            ui.Output($"Det finns {lista.Count} fordon av typ {type}");
+            int count = currGarage.NrOfType(type);
+            ui.Output($"Det finns {count} fordon av typ {type}");
         }
     }
 
@@ -160,7 +160,7 @@ internal class Manager
             return;
         }
 
-        var type = ui.GetVehicleType();
+        string type = ui.GetVehicleType();
 
         string regNr = "";
 
@@ -179,9 +179,9 @@ internal class Manager
             }
         }
 
-        string color;
+        //string color;
         ui.Output("Skriv in fordonets färg");
-        color = ui.GetInput();
+        string color = ui.GetInput();
 
         int wheels;
         ui.Output("Skriv in antalet hjul på fordonet");
